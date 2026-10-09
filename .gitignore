@@ -1,0 +1,35 @@
+# Dependencies and generated output
+node_modules/
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+*.tsbuildinfo
+coverage/
+
+# Generated native projects (Expo Continuous Native Generation)
+/ios/
+/android/
+.kotlin/
+
+# Local configuration and signing credentials
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+*.p8
+*.p12
+*.key
+*.pem
+*.mobileprovision
+credentials.json
+
+# Local tooling
+.DS_Store
+.idea/
+.metro-health-check*
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.orig

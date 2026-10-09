@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "JobLens",
+    "slug": "joblens-app",
+    "version": "0.1.0",
+    "scheme": "joblens",
+    "orientation": "default",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#FFFFFF",
+    "icon": "./assets/brand/icon.png",
+    "ios": {
+      "bundleIdentifier": "io.joblens.app",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "io.joblens.app"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/brand/icon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "./assets/brand/icon.png",
+          "imageWidth": 88
+        }
+      ]
+    ]
+  }
+}
