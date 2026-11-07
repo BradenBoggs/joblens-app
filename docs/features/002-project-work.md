@@ -6,7 +6,7 @@ The first connected JobLens mobile scope: work on projects from the field. The h
 
 ## Ownership and intended behavior
 
-All workflows below are planned. The foundation currently provides navigation and unconnected states only.
+Capture and upload is implemented as a spike ([003](003-offline-photo-capture.md)); the other workflows below are planned.
 
 | Area               | Mobile responsibility                                                                               | Boundary                                                                                                     |
 | ------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -33,8 +33,8 @@ All workflows below are planned. The foundation currently provides navigation an
 - Add billing, subscription management, team administration, CRM, or other workflows unrelated to project work.
 - Create checklists or checklist templates in the mobile app.
 - Duplicate backend business rules or treat hidden buttons as authorization.
-- Promise offline completion, background upload, or real-time delivery before those behaviors are designed and implemented.
+- Promise offline completion or real-time delivery for a workflow before it is designed and implemented. Photo capture is offline first ([003](003-offline-photo-capture.md)).
 
 ## Current state and next dependency
 
-None of these connected workflows is implemented in the initial shell. The next dependency is a verified native authentication and project API contract. Connect identity and project access first, then implement feature slices with their necessary server support and device checks. Add focused feature documents as those contracts become concrete.
+Sign-in, the project list and photo capture/upload use the Laravel mobile API ([003](003-offline-photo-capture.md)). The other workflows need their own API endpoints and device checks. Add focused feature documents as those contracts become concrete.

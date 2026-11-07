@@ -2,7 +2,7 @@
 
 The Expo app for project work in JobLens, starting with iOS and Android.
 
-**Current state:** a working navigation foundation with Feed and Projects tabs, an account screen, JobLens styling, and clear unconnected states. Sign-in, live project data, and project actions are not implemented yet.
+**Current state:** sign-in, a project list saved for offline use, a native camera, and an offline upload queue ([003](docs/features/003-offline-photo-capture.md)). The Feed tab is still unconnected. Device testing has not happened yet.
 
 ## Run locally
 
@@ -10,33 +10,33 @@ Use **Node.js 22 LTS, version 22.13 or newer**, and npm. The repository includes
 
 ```bash
 npm ci
-npm run start:go
+cp .env.example .env   # set EXPO_PUBLIC_API_URL to the JobLens server
+npm start
 ```
 
-Open the QR code in an Expo Go version that supports SDK 57. Your phone must be able to reach the development server. In WSL or a VM, networking may need configuration; a browser preview is also available with `npm run web`.
+The camera is native code, so the app needs a development build (see Native builds below); it doesn't run in Expo Go or a browser. Your phone must be able to reach the development server and the JobLens server.
 
-No environment variables, Expo account, backend server, or credentials are needed to preview this foundation. `.env.example` documents the public-configuration boundary for future integration; there is no API URL to configure yet.
+`EXPO_PUBLIC_API_URL` is the only setting. It is public and built into the app, so it must never hold a secret.
 
 | Command                      | Purpose                                                                    |
 | ---------------------------- | -------------------------------------------------------------------------- |
-| `npm run start:go`           | Start the foundation in Expo Go                                            |
+| `npm run start:go`           | Start in Expo Go (the camera and local database need a development build)  |
 | `npm start`                  | Start Metro; with `expo-dev-client` installed, targets a development build |
 | `npm run android`            | Open the development server on an available Android emulator/device        |
 | `npm run ios`                | Open the development server in an iOS simulator on macOS                   |
-| `npm run web`                | Open the React Native Web preview                                          |
 | `npm run check`              | TypeScript, ESLint, and formatting checks                                  |
 | `npm run check:dependencies` | Verify Expo SDK dependency compatibility                                   |
 | `npm run doctor`             | Check Expo project health, including remote compatibility checks           |
-| `npm run export`             | Create production JavaScript/asset bundles for iOS, Android, and web       |
+| `npm run export`             | Create production JavaScript/asset bundles for iOS and Android             |
 | `npm run format`             | Apply Prettier formatting                                                  |
 
-The `android` and `ios` commands launch an already installed app; they do not compile a native binary. The web preview helps inspect the shell and is not a replacement for device testing.
+The `android` and `ios` commands launch an already installed app; they do not compile a native binary.
 
 ## Initial product scope
 
 The dashboard is a **feed of recent project updates**. Project workflows will cover projects, media capture/upload and management, completing checklists, collections, markup, sharing, and upload requests. Checklist creation and template management stay in the desktop app. Billing, organization administration, and unrelated business features are outside this app's scope.
 
-See [project work](docs/features/002-project-work.md) for the approved scope and [app foundation](docs/features/001-app-foundation.md) for what is implemented now. The next integration step is a supported native authentication and project API in the Laravel backend. This repository does not assume that existing web-session or Inertia endpoints are a mobile API.
+See [project work](docs/features/002-project-work.md) for the approved scope and [app foundation](docs/features/001-app-foundation.md) for what is implemented now. The app uses the Laravel mobile API (`/api/v1`, Sanctum tokens); it doesn't call web-session or Inertia endpoints.
 
 ## Source organization
 
@@ -68,7 +68,7 @@ npx eas-cli@latest build --profile development --platform ios
 
 These are later account/build operations, not prerequisites for the shell. The initial bundle/package identifier is `io.joblens.app` and the URL scheme is `joblens`; verify identifiers before registering store apps. Install a development build, then use `npm start` for daily work.
 
-Native `ios/` and `android/` directories are generated through Expo Continuous Native Generation and are not committed. Make native configuration changes through app configuration and supported config plugins. Device permissions will be added with the feature that actually uses them.
+Native `ios/` and `android/` directories are generated through Expo Continuous Native Generation and are not committed. Make native configuration changes through app configuration and supported config plugins. Camera and location permissions are declared in `app.json` for photo capture.
 
 ## Verification and references
 

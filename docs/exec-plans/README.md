@@ -16,6 +16,7 @@ Completed plans are historical records. Move lasting product or architecture dec
 
 ## Records
 
+- [002 — Photo upload spike](active/002-photo-upload-spike.md): active; offline capture and upload against the Laravel mobile API.
 - [001 — Expo foundation](completed/001-expo-foundation.md): initialization, actual verification, and remaining integration/device work.
 
 Put a substantial plan in `active/` while it is being implemented, then move it to `completed/` when its scope is finished. Create the active directory when the first plan needs it.

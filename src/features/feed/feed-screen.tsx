@@ -4,11 +4,11 @@ import { Screen } from '@/components/screen';
 
 export function FeedScreen() {
   return (
-    <Screen title="Feed" description="Recent updates from your projects." preview>
+    <Screen title="Feed" description="Recent updates from your projects.">
       <EmptyState
         icon="albums-outline"
         title="Keep up with the work"
-        description="Photos added, checklist items completed, and other project updates will appear here once your account is connected."
+        description="Photos added, checklist items completed, and other project updates will appear here in a later version. For now, open a project to take photos."
         action={<NavigationButton href="/projects" label="View projects" />}
       />
     </Screen>

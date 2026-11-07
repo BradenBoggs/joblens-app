@@ -7,6 +7,9 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 
+import { AuthProvider, useAuth } from '@/features/auth/auth-provider';
+import { registerBackgroundUploads } from '@/features/uploads/background-upload-task';
+import { useUploadQueue } from '@/features/uploads/use-upload-queue';
 import { colors, layout, typography } from '@/theme/tokens';
 
 export { ErrorBoundary } from 'expo-router';
@@ -58,15 +61,42 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={theme}>
       <StatusBar style="dark" />
-      <Stack
-        screenOptions={{
-          headerTintColor: colors.text,
-          headerStyle: { backgroundColor: colors.background },
-          headerTitleStyle: typography.label,
-          contentStyle: { backgroundColor: colors.background },
-        }}
-      >
+      <AuthProvider>
+        <AppNavigator />
+      </AuthProvider>
+    </ThemeProvider>
+  );
+}
+
+function AppNavigator() {
+  const { status } = useAuth();
+  const signedIn = status === 'signed-in';
+
+  useUploadQueue(signedIn);
+
+  useEffect(() => {
+    if (signedIn) {
+      void registerBackgroundUploads();
+    }
+  }, [signedIn]);
+
+  if (status === 'loading') return null;
+
+  return (
+    <Stack
+      screenOptions={{
+        headerTintColor: colors.text,
+        headerStyle: { backgroundColor: colors.background },
+        headerTitleStyle: typography.label,
+        contentStyle: { backgroundColor: colors.background },
+      }}
+    >
+      <Stack.Protected guard={signedIn}>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="projects/[projectId]/camera"
+          options={{ headerShown: false, presentation: 'fullScreenModal', animation: 'fade' }}
+        />
         <Stack.Screen
           name="account"
           options={{
@@ -76,9 +106,12 @@ export default function RootLayout() {
             headerLeft: () => <CloseAccountButton />,
           }}
         />
-        <Stack.Screen name="+not-found" options={{ title: 'Page not found' }} />
-      </Stack>
-    </ThemeProvider>
+      </Stack.Protected>
+      <Stack.Protected guard={!signedIn}>
+        <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+      </Stack.Protected>
+      <Stack.Screen name="+not-found" options={{ title: 'Page not found' }} />
+    </Stack>
   );
 }
 
