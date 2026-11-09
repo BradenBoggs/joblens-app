@@ -80,7 +80,7 @@ export function UploadsScreen() {
         </View>
       }
       ListEmptyComponent={
-        captures === null ? null : (
+        captures === null ? undefined : (
           <EmptyState
             icon="cloud-done-outline"
             title="No photos waiting"

@@ -74,7 +74,7 @@ Native `ios/` and `android/` directories are generated through Expo Continuous N
 
 [Engineering workflow](docs/engineering/WORKFLOW.md) describes the checks and their limits. The GitHub Actions workflow runs them on pull requests and changes to `main`; it does not build signed binaries or publish releases.
 
-This foundation uses Expo SDK 57, React Native 0.86.3, React 19.2.3, and TypeScript 6. `package.json` and the committed npm lockfile own the exact dependency versions.
+This foundation uses Expo SDK 58, React Native 0.88.1, React 19.3.0, and TypeScript 6. `package.json` and the committed npm lockfile own the exact dependency versions.
 
 - [Expo project setup](https://docs.expo.dev/get-started/create-a-project/)
 - [Expo SDK compatibility](https://docs.expo.dev/versions/latest/)

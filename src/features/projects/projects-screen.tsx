@@ -106,7 +106,7 @@ export function ProjectsScreen() {
         </View>
       }
       ListEmptyComponent={
-        projects === null ? null : (
+        projects === null ? undefined : (
           <EmptyState
             icon="folder-open-outline"
             title={search ? 'No matching projects' : 'No projects yet'}
