@@ -65,8 +65,12 @@ export default function TabsLayout() {
         name="index"
         options={{
           title: 'Feed',
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'albums' : 'albums-outline'} size={size} color={color} />
+          tabBarIcon: ({ size, focused }) => (
+            <Ionicons
+              name={focused ? 'albums' : 'albums-outline'}
+              size={size}
+              color={focused ? colors.brandText : colors.muted}
+            />
           ),
         }}
       />
@@ -74,11 +78,11 @@ export default function TabsLayout() {
         name="projects"
         options={{
           title: 'Projects',
-          tabBarIcon: ({ color, size, focused }) => (
+          tabBarIcon: ({ size, focused }) => (
             <Ionicons
               name={focused ? 'folder-open' : 'folder-open-outline'}
               size={size}
-              color={color}
+              color={focused ? colors.brandText : colors.muted}
             />
           ),
         }}
