@@ -87,6 +87,19 @@ export default function TabsLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="uploads"
+        options={{
+          title: 'Uploads',
+          tabBarIcon: ({ size, focused }) => (
+            <Ionicons
+              name={focused ? 'cloud-upload' : 'cloud-upload-outline'}
+              size={size}
+              color={focused ? colors.brandText : colors.muted}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

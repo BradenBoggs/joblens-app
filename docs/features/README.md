@@ -1,9 +1,10 @@
 # Features
 
-| Document                                      | State                    | Purpose                                                      |
-| --------------------------------------------- | ------------------------ | ------------------------------------------------------------ |
-| [001 — App foundation](001-app-foundation.md) | Initial navigation shell | Expo setup, shared UI, and honest unconnected screens        |
-| [002 — Project work](002-project-work.md)     | Planned workflows        | Product scope and ownership for the first connected features |
+| Document                                                    | State                    | Purpose                                                      |
+| ----------------------------------------------------------- | ------------------------ | ------------------------------------------------------------ |
+| [001 — App foundation](001-app-foundation.md)               | Initial navigation shell | Expo setup, shared UI, and honest unconnected screens        |
+| [002 — Project work](002-project-work.md)                   | Planned workflows        | Product scope and ownership for the first connected features |
+| [003 — Offline photo capture](003-offline-photo-capture.md) | Spike, not device-tested | Sign-in, saved projects, camera and the offline upload queue |
 
 ## Feature document format
 

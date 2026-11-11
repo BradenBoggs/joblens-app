@@ -27,6 +27,4 @@ The initial Expo application and navigation shell for JobLens on iOS and Android
 
 ## Current state
 
-The foundation provides the navigation shell and unconnected screens. It does not authenticate users, fetch project updates, list real projects, or perform project operations.
-
-Native authentication and the project API must be established before connecting these screens. The planned workflows are recorded in [002 — Project work](002-project-work.md). Use the [engineering workflow](../engineering/WORKFLOW.md) and completion records for validation results; this document is not evidence that a device build or backend integration has passed.
+The foundation provides the navigation shell. Sign-in, Projects and Uploads are now connected through [003 — Offline photo capture](003-offline-photo-capture.md); the Feed is still unconnected. The planned workflows are recorded in [002 — Project work](002-project-work.md). Use the [engineering workflow](../engineering/WORKFLOW.md) and completion records for validation results; this document is not evidence that a device build or backend integration has passed.

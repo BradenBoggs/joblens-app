@@ -10,10 +10,14 @@
     "icon": "./assets/brand/icon.png",
     "ios": {
       "bundleIdentifier": "io.joblens.app",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "JobLens uses the camera to take project photos. Photos are saved on this phone and upload to the project when you have service."
+      }
     },
     "android": {
-      "package": "io.joblens.app"
+      "package": "io.joblens.app",
+      "permissions": ["android.permission.CAMERA"]
     },
     "web": {
       "output": "static",
@@ -27,6 +31,17 @@
           "backgroundColor": "#FFFFFF",
           "image": "./assets/brand/icon.png",
           "imageWidth": 88
+        }
+      ],
+      "expo-secure-store",
+      "expo-sqlite",
+      "expo-background-task",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "JobLens records where each project photo was taken, even without service.",
+          "isIosBackgroundLocationEnabled": false,
+          "isAndroidBackgroundLocationEnabled": false
         }
       ]
     ]

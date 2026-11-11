@@ -36,12 +36,12 @@ Capture produces a local file. Upload transfers an authorized file. A gallery pr
 
 ## Integration boundary
 
-A supported native authentication and project API contract has not been established for this app. The backend's web session and Inertia workflows are not an assumed mobile API. The foundation must not call guessed endpoints or simulate authentication.
+The app uses the Laravel mobile API at `/api/v1` with a per-device Sanctum token (see `docs/features/mobile-api.md` in the main JobLens repository). The backend's web session and Inertia workflows are not a mobile API, and the app must not call guessed endpoints or simulate authentication.
 
 When connecting a feature, first verify its backend contract, authorization, request/response shape, and error behavior. Keep URLs and environment-specific values in configuration. Never place storage credentials, server secrets, or permanent access tokens in app configuration or the repository. Choose secure credential storage when the authentication flow is implemented.
 
 For media, the intended flow is: obtain server authorization, transfer directly to the signed private-storage destination, then ask the server to verify completion. Laravel runs the shared ingestion and background processing path. Preserve original files; server-generated previews are separate assets. Signed URLs are temporary access details, not permanent resource identifiers.
 
-Offline queues, resumable background transfers, push notifications, and custom video transcoding are not foundation infrastructure. Decide their behavior when the related feature is implemented and its device constraints are known.
+Photo capture is offline first: photos and their upload state live in a local SQLite database until the server accepts them ([003](features/003-offline-photo-capture.md)). Push notifications and video transcoding are not built yet.
 
 See [project work](features/002-project-work.md) for product scope and [app foundation](features/001-app-foundation.md) for the current implementation boundary.
