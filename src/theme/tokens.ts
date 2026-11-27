@@ -18,6 +18,8 @@ export const colors = {
   brandSoft: '#FFF2EA', // primary-subtle
   onBrand: '#FFFFFF', // primary-foreground
   onDark: '#FFFFFF',
+  successSoft: '#EAF8EF', // success-subtle
+  successText: '#166534', // success-subtle-foreground
 } as const;
 
 export const spacing = {

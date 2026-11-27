@@ -82,6 +82,29 @@ export function SkeletonRows({ count = 4, icon = false }: SkeletonRowsProps) {
   );
 }
 
+/** Placeholder cards in the shape of the project card: preview square and three lines. */
+export function SkeletonCards({ count = 4 }: { count?: number }) {
+  return (
+    <View
+      style={styles.rows}
+      accessible
+      accessibilityRole="progressbar"
+      accessibilityLabel="Loading"
+    >
+      {Array.from({ length: count }, (_, index) => (
+        <View key={index} style={styles.card}>
+          <Skeleton width={72} height={72} radius={layout.radius} />
+          <View style={styles.rowText}>
+            <Skeleton width="60%" height={16} />
+            <Skeleton width="80%" height={12} />
+            <Skeleton width="50%" height={12} />
+          </View>
+        </View>
+      ))}
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   shape: { backgroundColor: colors.surface },
   rows: { gap: spacing.sm },
@@ -95,4 +118,13 @@ const styles = StyleSheet.create({
     borderRadius: layout.radius,
   },
   rowText: { flex: 1, gap: spacing.sm },
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: colors.border,
+    borderRadius: 12,
+  },
 });

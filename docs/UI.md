@@ -58,6 +58,8 @@ There are two levels, and each has one bottom bar. The bar changes only when you
 
 Things that belong to the whole app stay in the same place at both levels. The notification bell will sit at the top right of every page once the app has a notifications feed; chat belongs to one project, so it lives in the project's bottom bar.
 
+Projects are listed as `ProjectCard`s, in the style of the web app's phone-width project card: preview square, name with an Open or Closed tag, address, and when it last changed. Photo and checklist counts and a real preview photo wait on the project list from the server including them.
+
 Uploading is a status, not a place, so it has no tab. `UploadNotice` shows how many photos are still on the phone, on Home when any are waiting and always on Account, and opens the Photo uploads page.
 
 Keep navigation visible and predictable. Do not add a top-level tab for every planned project feature. The project detail structure can grow when those workflows are implemented.
