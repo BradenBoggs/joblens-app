@@ -1,16 +1,25 @@
 import type { TextStyle } from 'react-native';
 
+/**
+ * Values match the variables in the JobLens UI Systems Figma file.
+ * The comment on each line names the Figma variable.
+ */
 export const colors = {
-  background: '#FFFFFF',
-  surface: '#F8FAFC',
-  border: '#E4E7EC',
-  text: '#101828',
-  secondary: '#344054',
-  muted: '#667085',
-  brand: '#FF5A1F',
-  brandPressed: '#F04B16',
-  brandText: '#C2410C',
-  brandSoft: '#FFF1EB',
+  background: '#FFFFFF', // background, card
+  surface: '#F0F4F8', // muted
+  border: '#E5E7EB', // input
+  text: '#111827', // foreground
+  secondary: '#1F2A44', // accent-foreground
+  muted: '#56698A', // muted-foreground
+  placeholder: '#94A3B8', // placeholder
+  brand: '#FF6A21', // primary
+  brandPressed: '#F05A12',
+  brandText: '#B9470E', // primary-subtle-foreground
+  brandSoft: '#FFF2EA', // primary-subtle
+  onBrand: '#FFFFFF', // primary-foreground
+  onDark: '#FFFFFF',
+  successSoft: '#EAF8EF', // success-subtle
+  successText: '#166534', // success-subtle-foreground
 } as const;
 
 export const spacing = {
@@ -30,10 +39,30 @@ export const layout = {
   contentWidth: 760,
 } as const;
 
+/** Sizes for the top bar and bottom bar that every screen shares. */
+export const shell = {
+  barHeight: 56,
+  barPadding: 12,
+  barGap: 8,
+  /** The touch box of a bar icon button. The icon has no background. */
+  barButton: 40,
+  barIcon: 24,
+  brandMark: 32,
+  brandMarkRadius: 7,
+  tabIcon: 22,
+  actionButton: 60,
+  /** Half of actionButton, so the camera button is a circle. */
+  actionRadius: 30,
+  actionLift: 22,
+  actionIcon: 26,
+} as const;
+
 export const typography = {
-  title: { fontSize: 24, lineHeight: 30, fontWeight: '700' },
+  title: { fontSize: 24, lineHeight: 30, fontWeight: '700', letterSpacing: -0.36 },
   heading: { fontSize: 20, lineHeight: 28, fontWeight: '600' },
+  barTitle: { fontSize: 16, lineHeight: 24, fontWeight: '600' },
   body: { fontSize: 16, lineHeight: 24, fontWeight: '400' },
   label: { fontSize: 14, lineHeight: 20, fontWeight: '600' },
   caption: { fontSize: 13, lineHeight: 20, fontWeight: '400' },
+  micro: { fontSize: 12, lineHeight: 18, fontWeight: '400' },
 } satisfies Record<string, TextStyle>;

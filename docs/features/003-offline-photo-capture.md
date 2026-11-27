@@ -21,7 +21,7 @@ Laravel owns accounts, project access, upload authorization, checking and storag
 - Upload right away on Wi-Fi or cellular whenever there is service: up to 6 photos at a time on Wi-Fi, 3 on cellular.
 - Ask for an upload address only when sending (addresses expire after 15 minutes), refresh an expired one, and retry with backoff when the signal drops.
 - Reuse each photo's idempotency key on every retry, so a retry never creates a duplicate.
-- Show what is waiting, per project and on the Uploads tab, with Retry and Discard for photos JobLens rejected.
+- Show what is waiting, per project and on the Photo uploads page (opened from Home or Account), with Retry and Discard for photos JobLens rejected.
 - Resume the queue on launch, when service returns, when the app comes to the foreground, and from a background task while the app is closed. iOS and Android decide when the background task runs.
 - Warn when the phone is almost full, and confirm before signing out deletes photos that have not uploaded.
 

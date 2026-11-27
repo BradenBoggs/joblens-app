@@ -1,6 +1,8 @@
+import * as Linking from 'expo-linking';
 import { useState } from 'react';
 import {
   ActivityIndicator,
+  Image,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -10,9 +12,10 @@ import {
 } from 'react-native';
 
 import { AppText } from '@/components/app-text';
-import { Screen } from '@/components/screen';
-import { ApiError, isApiConfigured } from '@/lib/api';
-import { colors, layout, spacing, typography } from '@/theme/tokens';
+import { PageHeading } from '@/components/screen';
+import { AppShell } from '@/components/shell/app-shell';
+import { ApiError, isApiConfigured, webUrl } from '@/lib/api';
+import { colors, layout, shell, spacing, typography } from '@/theme/tokens';
 
 import { useAuth } from './auth-provider';
 
@@ -24,6 +27,8 @@ export function SignInScreen() {
   const [needsCode, setNeedsCode] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const forgotPasswordUrl = webUrl('/forgot-password');
 
   async function submit() {
     setBusy(true);
@@ -51,7 +56,16 @@ export function SignInScreen() {
       style={styles.flex}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <Screen title="Sign in to JobLens" description="Use your JobLens email and password.">
+      <AppShell>
+        <Image
+          source={require('@/assets/brand/icon.png')}
+          style={styles.mark}
+          accessibilityIgnoresInvertColors
+        />
+        <PageHeading
+          title="Sign in to JobLens"
+          description="Use the email and password for your JobLens account."
+        />
         {!isApiConfigured() && (
           <AppText variant="caption" muted>
             This build has no server address. Set EXPO_PUBLIC_API_URL and rebuild.
@@ -62,7 +76,10 @@ export function SignInScreen() {
             <TextInput
               value={email}
               onChangeText={setEmail}
+              placeholder="you@company.com"
+              placeholderTextColor={colors.placeholder}
               autoCapitalize="none"
+              autoCorrect={false}
               autoComplete="email"
               keyboardType="email-address"
               textContentType="username"
@@ -73,12 +90,36 @@ export function SignInScreen() {
             <TextInput
               value={password}
               onChangeText={setPassword}
-              secureTextEntry
+              secureTextEntry={!showPassword}
+              autoCapitalize="none"
+              autoCorrect={false}
               autoComplete="current-password"
               textContentType="password"
               style={styles.input}
             />
           </Field>
+          <View style={styles.links}>
+            <Pressable
+              accessibilityRole="button"
+              hitSlop={12}
+              onPress={() => setShowPassword((shown) => !shown)}
+            >
+              <AppText variant="label" style={styles.link}>
+                {showPassword ? 'Hide password' : 'Show password'}
+              </AppText>
+            </Pressable>
+            {forgotPasswordUrl && (
+              <Pressable
+                accessibilityRole="link"
+                hitSlop={12}
+                onPress={() => void Linking.openURL(forgotPasswordUrl)}
+              >
+                <AppText variant="label" style={styles.link}>
+                  Forgot password?
+                </AppText>
+              </Pressable>
+            )}
+          </View>
           {needsCode && (
             <Field label="Authentication code">
               <TextInput
@@ -113,7 +154,10 @@ export function SignInScreen() {
             )}
           </Pressable>
         </View>
-      </Screen>
+        <AppText variant="caption" muted style={styles.footer}>
+          Works offline after your first sign-in.
+        </AppText>
+      </AppShell>
     </KeyboardAvoidingView>
   );
 }
@@ -129,6 +173,15 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 const styles = StyleSheet.create({
   flex: { flex: 1 },
+  mark: {
+    width: shell.brandMark + spacing.lg,
+    height: shell.brandMark + spacing.lg,
+    borderRadius: 11,
+    marginTop: spacing.xxl,
+  },
+  links: { flexDirection: 'row', justifyContent: 'space-between' },
+  link: { color: colors.secondary },
+  footer: { textAlign: 'center' },
   form: { gap: spacing.lg },
   field: { gap: spacing.xs },
   input: {

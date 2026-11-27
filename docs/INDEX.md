@@ -11,6 +11,7 @@
 - [Repository instructions](../AGENTS.md): starting points and working defaults.
 - [Local setup](../README.md): installation and development commands.
 - [Engineering workflow](engineering/WORKFLOW.md): implementation and validation.
+- [Working with the JobLens API](engineering/API.md): API calls, errors, tokens, cross-repository features, and tests.
 - [Execution plans](exec-plans/README.md): substantial work and completion records.
 
 Feature documents describe the product and its responsibilities. Execution plans describe a particular piece of work; completed plans are historical records.

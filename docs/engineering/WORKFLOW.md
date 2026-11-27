@@ -26,11 +26,11 @@ On Windows PowerShell, set `$env:CI = '1'` before running the corresponding comm
 | Expo compatibility / Doctor | Configuration and dependency checks, subject to reported network availability | Native device acceptance                |
 | Expo export                 | Production JavaScript and assets bundle for the configured platforms          | A compiled or signed iOS/Android binary |
 
-The initial shell has no domain logic or API requests, so it has no placeholder unit-test suite. Add focused tests alongside real state transitions, authorization handling, data mapping, or upload behavior. Do not install a test framework just to assert that a title exists.
+Add focused tests alongside real state transitions, authorization handling, data mapping, or upload behavior, as described in [Working with the JobLens API](API.md#tests). Do not install a test framework just to assert that a title exists.
 
 ## Device and integration checks
 
-For the first device build, check Feed ↔ Projects navigation, account open/close, Android back, direct links, notches, rotation, and larger text on iOS and Android. Check final splash appearance in a preview or production build, since Expo Go and development clients have their own launch behavior. Verify screen-reader labels and visible focus where applicable.
+For the first device build, check Home ↔ Projects navigation, account open/close, Android back, direct links, notches, rotation, and larger text on iOS and Android. Check final splash appearance in a preview or production build, since Expo Go and development clients have their own launch behavior. Verify screen-reader labels and visible focus where applicable.
 
 When project integration begins, verify authentication/revocation, organization/project isolation, loading versus unavailable states, and recovery from failed requests. Test capture and media-library permissions, original preservation, upload acceptance, and app interruption on devices when those features exist. Bytes transferred alone do not mean the server accepted an upload.
 

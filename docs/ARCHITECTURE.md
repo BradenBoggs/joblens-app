@@ -4,7 +4,7 @@
 
 JobLens mobile provides project work on iOS and Android. The Expo app owns native interaction and presentation. The Laravel application owns business rules, authorization, organization boundaries, and durable project data.
 
-The starting implementation is an unconnected navigation shell. It has a Feed tab, a Projects tab, and an account screen for identity and access context. The account screen is not an organization administration area.
+The starting implementation is an unconnected navigation shell. It has a Home tab, a Projects tab, and an account screen for identity and access context. The account screen is not an organization administration area.
 
 ## Source layout
 
