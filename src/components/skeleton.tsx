@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AccessibilityInfo,
   Animated,
@@ -23,7 +23,7 @@ type SkeletonProps = {
  * It pulses gently, and stays still when the phone is set to reduce motion.
  */
 export function Skeleton({ width = '100%', height = 14, radius = 6, style }: SkeletonProps) {
-  const opacity = useRef(new Animated.Value(1)).current;
+  const [opacity] = useState(() => new Animated.Value(1));
 
   useEffect(() => {
     let pulse: Animated.CompositeAnimation | undefined;
