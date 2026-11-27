@@ -5,6 +5,7 @@ import { FlatList, Pressable, RefreshControl, StyleSheet, TextInput, View } from
 
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
+import { SkeletonRows } from '@/components/skeleton';
 import { useAuth } from '@/features/auth/auth-provider';
 import { pendingCountsByProject, subscribeToCaptures } from '@/features/uploads/captures';
 import { ApiError } from '@/lib/api';
@@ -93,18 +94,24 @@ export function ProjectsScreen() {
               {notice}
             </AppText>
           )}
-          <TextInput
-            value={search}
-            onChangeText={setSearch}
-            placeholder="Search projects"
-            placeholderTextColor={colors.muted}
-            accessibilityLabel="Search projects"
-            style={styles.search}
-          />
+          <View style={styles.search}>
+            <Ionicons name="search" size={18} color={colors.muted} />
+            <TextInput
+              value={search}
+              onChangeText={setSearch}
+              placeholder="Search projects"
+              placeholderTextColor={colors.muted}
+              accessibilityLabel="Search projects"
+              autoCorrect={false}
+              style={styles.searchInput}
+            />
+          </View>
         </View>
       }
       ListEmptyComponent={
-        projects === null ? undefined : (
+        projects === null ? (
+          <SkeletonRows count={5} />
+        ) : (
           <EmptyState
             icon="folder-open-outline"
             title={search ? 'No matching projects' : 'No projects yet'}
@@ -161,13 +168,15 @@ const styles = StyleSheet.create({
   },
   header: { gap: spacing.md, marginBottom: spacing.sm },
   search: {
-    ...typography.body,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.sm,
     minHeight: layout.touchTarget,
     paddingHorizontal: spacing.md,
     borderRadius: layout.radius,
     backgroundColor: colors.surface,
-    color: colors.text,
   },
+  searchInput: { ...typography.body, flex: 1, color: colors.text },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
