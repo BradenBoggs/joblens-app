@@ -13,6 +13,7 @@ Read the current request, then only the documentation relevant to the change:
 | Ownership and integration boundaries       | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)                 |
 | Visual and interaction decisions           | [docs/UI.md](docs/UI.md)                                     |
 | Implementation and validation workflow     | [docs/engineering/WORKFLOW.md](docs/engineering/WORKFLOW.md) |
+| Calling the Laravel API, cross-repo work   | [docs/engineering/API.md](docs/engineering/API.md)           |
 
 Scoped guidance lives in [src/AGENTS.md](src/AGENTS.md) and [docs/AGENTS.md](docs/AGENTS.md).
 

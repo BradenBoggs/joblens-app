@@ -26,7 +26,7 @@ On Windows PowerShell, set `$env:CI = '1'` before running the corresponding comm
 | Expo compatibility / Doctor | Configuration and dependency checks, subject to reported network availability | Native device acceptance                |
 | Expo export                 | Production JavaScript and assets bundle for the configured platforms          | A compiled or signed iOS/Android binary |
 
-The initial shell has no domain logic or API requests, so it has no placeholder unit-test suite. Add focused tests alongside real state transitions, authorization handling, data mapping, or upload behavior. Do not install a test framework just to assert that a title exists.
+Add focused tests alongside real state transitions, authorization handling, data mapping, or upload behavior, as described in [Working with the JobLens API](API.md#tests). Do not install a test framework just to assert that a title exists.
 
 ## Device and integration checks
 
