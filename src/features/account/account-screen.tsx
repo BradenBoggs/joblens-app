@@ -2,8 +2,7 @@ import Constants from 'expo-constants';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/app-text';
-import { AppShell } from '@/components/shell/app-shell';
-import { PageTopBar } from '@/components/shell/page-top-bar';
+import { PageHeading } from '@/components/screen';
 import { useAuth } from '@/features/auth/auth-provider';
 import { pendingCount } from '@/features/uploads/captures';
 import { colors, layout, spacing } from '@/theme/tokens';
@@ -30,7 +29,8 @@ export function AccountScreen() {
   }
 
   return (
-    <AppShell topBar={<PageTopBar title="Account" subtitle={member?.organization.name} />}>
+    <>
+      <PageHeading title="Account" />
       <View style={styles.details}>
         <AppText variant="label">{member?.user.name ?? 'Signed in'}</AppText>
         {member && (
@@ -54,7 +54,7 @@ export function AccountScreen() {
       <AppText variant="caption" muted>
         JobLens app version {Constants.expoConfig?.version ?? 'development'}
       </AppText>
-    </AppShell>
+    </>
   );
 }
 

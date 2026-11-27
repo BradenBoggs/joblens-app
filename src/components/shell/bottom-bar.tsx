@@ -62,11 +62,11 @@ export function BottomBarItem({
     >
       {({ pressed }) => (
         <>
-          <View style={[styles.icon, (active || pressed) && styles.iconActive]}>
+          <View style={[styles.icon, pressed && styles.iconPressed]}>
             <Ionicons
               name={active ? activeIcon : icon}
-              size={shell.barIcon}
-              color={active ? colors.secondary : colors.muted}
+              size={shell.tabIcon}
+              color={active ? colors.text : colors.muted}
             />
             {badge > 0 ? (
               <View style={styles.badge}>
@@ -89,10 +89,37 @@ export function BottomBarItem({
   );
 }
 
+type BottomBarActionProps = {
+  icon: IconName;
+  /** Read aloud by screen readers; the button has no visible text. */
+  label: string;
+  onPress: () => void;
+};
+
+/**
+ * The raised orange button for a page's one main action, placed between the
+ * BottomBarItems. Taking photos uses it, and only in project and collection bars.
+ */
+export function BottomBarAction({ icon, label, onPress }: BottomBarActionProps) {
+  return (
+    <View style={styles.actionSlot}>
+      <Pressable
+        accessibilityRole="button"
+        accessibilityLabel={label}
+        onPress={onPress}
+        style={({ pressed }) => [styles.action, pressed && styles.actionPressed]}
+      >
+        <Ionicons name={icon} size={shell.actionIcon} color={colors.onBrand} />
+      </Pressable>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   bar: {
     flexDirection: 'row',
-    paddingTop: spacing.xs,
+    alignItems: 'flex-end',
+    paddingTop: spacing.sm,
     backgroundColor: colors.background,
   },
   item: {
@@ -102,21 +129,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 2,
   },
-  // The current tab's icon sits in the same shape as a top bar button.
   icon: {
-    width: shell.barButton,
-    height: shell.barButton,
-    borderRadius: shell.barButtonRadius,
+    minWidth: layout.touchTarget,
+    height: 28,
+    borderRadius: layout.radius,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  iconActive: { backgroundColor: colors.surface },
+  iconPressed: { backgroundColor: colors.surface },
   label: { color: colors.muted },
   labelActive: { color: colors.text, fontWeight: '600' },
   badge: {
     position: 'absolute',
-    top: -2,
-    left: 24,
+    top: -6,
+    left: 28,
     minWidth: 20,
     paddingHorizontal: 6,
     borderRadius: 6,
@@ -124,4 +150,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   badgeText: { color: colors.onBrand, fontWeight: '600' },
+  actionSlot: { flex: 1, alignItems: 'center' },
+  // Sits above the bar's top edge; the white border separates it from content behind.
+  action: {
+    width: shell.actionButton,
+    height: shell.actionButton,
+    marginTop: -shell.actionLift,
+    borderRadius: shell.actionRadius,
+    borderWidth: 4,
+    borderColor: colors.background,
+    backgroundColor: colors.brand,
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: '0px 6px 16px rgba(255, 106, 33, 0.35)',
+  },
+  actionPressed: { backgroundColor: colors.brandPressed },
 });

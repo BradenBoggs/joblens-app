@@ -15,9 +15,13 @@ const tabs: Tab[] = [
   { href: '/', label: 'Feed', icon: 'albums-outline', activeIcon: 'albums' },
   { href: '/projects', label: 'Projects', icon: 'folder-open-outline', activeIcon: 'folder-open' },
   { href: '/uploads', label: 'Uploads', icon: 'cloud-upload-outline', activeIcon: 'cloud-upload' },
+  { href: '/account', label: 'Account', icon: 'person-outline', activeIcon: 'person' },
 ];
 
-/** The bottom bar for the app's main tabs. Uploads shows how many photos are still waiting. */
+/**
+ * The bottom bar for the app's main tabs. Uploads shows how many photos are still
+ * waiting. It has no camera button: photos are taken from inside a project or collection.
+ */
 export function MainTabBar() {
   const router = useRouter();
   const pathname = usePathname();

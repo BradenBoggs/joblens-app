@@ -29,14 +29,15 @@ Every screen is built on `AppShell` (`src/components/shell/`). It has three slot
 
 | Page kind                     | Top bar                                                                  | Bottom bar                         |
 | ----------------------------- | ------------------------------------------------------------------------ | ---------------------------------- |
-| Main tab (Feed, Projects…)    | `MainTopBar`: JobLens mark, optional actions, account avatar             | `MainTabBar`                       |
+| Main tab (Feed, Projects…)    | `MainTopBar`: JobLens mark, optional actions                             | `MainTabBar`                       |
 | Page opened from another page | `PageTopBar`: back button, centred title and subtitle, up to two actions | None, or a bar built for that page |
 | Full-screen task (camera)     | None                                                                     | None                               |
 | Signed out                    | None                                                                     | None                               |
 
 - Main tabs get their bars from `MainTabShell` in the route file. Any other page renders `AppShell` itself and passes its own bars.
 - Build a new bar from the parts, not from scratch: `TopBar` has `left`, `center`, `right` and `below` slots; `BottomBar` takes `BottomBarItem`s or any other controls.
-- The bottom bar follows the top bar: no divider line, and the current tab's icon sits in the same grey shape as a top bar button, with navy icons and no orange.
+- The bottom bar has no divider line and no orange on its tabs. The current tab is shown by a filled icon and darker, bolder text.
+- The camera is the only orange in a bottom bar: `BottomBarAction`, a raised button between the tabs. It appears only in project and collection bars, where a photo has somewhere to go. The main tab bar never has it.
 - Bar buttons are drawn at 40 points with a 48-point touch area. Their sizes and corner shape are the `shell` tokens.
 - The centred title is one line and shortens with an ellipsis. Put longer context in the page content.
 - The bars own the safe areas at their edge. Screens inside the shell do not add status bar or home indicator padding.
@@ -47,7 +48,7 @@ Every screen is built on `AppShell` (`src/components/shell/`). It has three slot
 - **Feed:** recent updates from permitted projects. It is not a business metrics dashboard.
 - **Projects:** find and open permitted projects; project workflows belong within that context.
 - **Uploads:** photos saved on the phone that are waiting to reach JobLens.
-- **Account:** identity and access support, opened from the avatar in the top bar. Keep billing, team administration, and organization configuration in the desktop app.
+- **Account:** identity and access support, the last main tab. Keep billing, team administration, and organization configuration in the desktop app.
 
 Keep navigation visible and predictable. Do not add a top-level tab for every planned project feature. The project detail structure can grow when those workflows are implemented.
 

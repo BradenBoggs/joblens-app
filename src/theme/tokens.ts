@@ -46,9 +46,13 @@ export const shell = {
   /** Half of barButton draws a circle. Use layout.radius for rounded squares. */
   barButtonRadius: 20,
   barIcon: 20,
-  avatar: 28,
   brandMark: 32,
   brandMarkRadius: 7,
+  tabIcon: 22,
+  actionButton: 60,
+  actionRadius: 16,
+  actionLift: 22,
+  actionIcon: 26,
 } as const;
 
 export const typography = {
