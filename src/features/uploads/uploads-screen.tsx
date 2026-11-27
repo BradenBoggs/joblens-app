@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Alert, FlatList, Pressable, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { File } from 'expo-file-system';
 
 import { AppText } from '@/components/app-text';
@@ -19,7 +18,6 @@ const stateLabels: Record<Capture['state'], string> = {
 };
 
 export function UploadsScreen() {
-  const insets = useSafeAreaInsets();
   const [captures, setCaptures] = useState<Capture[] | null>(null);
 
   const load = useCallback(() => void listCaptures().then(setCaptures), []);
@@ -57,12 +55,9 @@ export function UploadsScreen() {
       data={captures ?? []}
       keyExtractor={(capture) => capture.id}
       style={styles.list}
-      contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + spacing.xxl }]}
+      contentContainerStyle={styles.content}
       ListHeaderComponent={
         <View style={styles.header}>
-          <AppText variant="title" accessibilityRole="header">
-            Uploads
-          </AppText>
           <AppText muted>
             {waiting > 0
               ? `${waiting} photos are saved on this phone and upload when you have service.`
@@ -129,7 +124,8 @@ const styles = StyleSheet.create({
   list: { flex: 1, backgroundColor: colors.background },
   content: {
     paddingHorizontal: spacing.gutter,
-    paddingTop: spacing.xl,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xxl,
     gap: spacing.sm,
     width: '100%',
     maxWidth: layout.contentWidth,

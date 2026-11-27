@@ -2,9 +2,10 @@ import Constants from 'expo-constants';
 import { Alert, Pressable, StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/app-text';
-import { Screen } from '@/components/screen';
+import { PageHeading } from '@/components/screen';
 import { useAuth } from '@/features/auth/auth-provider';
 import { pendingCount } from '@/features/uploads/captures';
+import { UploadNotice } from '@/features/uploads/upload-notice';
 import { colors, layout, spacing } from '@/theme/tokens';
 
 export function AccountScreen() {
@@ -29,7 +30,8 @@ export function AccountScreen() {
   }
 
   return (
-    <Screen title="Your account">
+    <>
+      <PageHeading title="Account" />
       <View style={styles.details}>
         <AppText variant="label">{member?.user.name ?? 'Signed in'}</AppText>
         {member && (
@@ -43,6 +45,7 @@ export function AccountScreen() {
           </>
         )}
       </View>
+      <UploadNotice showWhenEmpty />
       <Pressable
         accessibilityRole="button"
         onPress={() => void confirmSignOut()}
@@ -53,7 +56,7 @@ export function AccountScreen() {
       <AppText variant="caption" muted>
         JobLens app version {Constants.expoConfig?.version ?? 'development'}
       </AppText>
-    </Screen>
+    </>
   );
 }
 
