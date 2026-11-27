@@ -10,6 +10,7 @@ Use [architecture](../docs/ARCHITECTURE.md) for ownership and API changes, [UI g
 - Keep camera capture, upload transport, and gallery interaction as separate responsibilities. They can use the same server media identifiers without owning each other's behavior.
 - Native code may request an authorized operation; it cannot grant permissions or decide organization access. Do not infer a supported mobile API from a web route.
 - Keep originals intact. Future markup must save a separate result according to the backend contract; preview generation and media processing belong to Laravel.
+- Give every screen that loads content a skeleton loading state (`Skeleton`, `SkeletonRows`) in the shape of the content, not a spinner.
 - Show honest loading, empty, unavailable, and error states. An unconnected app must not display fabricated project activity, uploads, or a successful sign-in.
 - Make controls accessible and usable with safe areas, larger text, and the platform keyboard. Avoid fixed-height text containers that clip content.
 

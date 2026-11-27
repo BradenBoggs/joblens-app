@@ -64,6 +64,8 @@ Keep navigation visible and predictable. Do not add a top-level tab for every pl
 
 ## States and interactions
 
+Every screen that loads content has a skeleton loading state, built from `Skeleton` and `SkeletonRows` (`src/components/skeleton.tsx`). The bars are real from the first moment; only the content is replaced by grey shapes laid out like what is coming, at the same sizes, so nothing jumps. Show skeletons on the first load only. Once content is saved on the phone, show that while it refreshes. Do not use a full-screen spinner.
+
 The foundation is unconnected. Explain that limitation plainly, without presenting fabricated projects or an empty state that implies a successful server response. Do not place active-looking controls on screens when they have no meaningful action.
 
 Connected features should distinguish loading, a confirmed empty result, a failed request, and missing permission. Preserve useful context after errors and provide recovery when it exists. Confirm consequential actions through the interaction appropriate to that action; do not add confirmation dialogs to routine navigation.
