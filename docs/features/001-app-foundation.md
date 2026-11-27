@@ -8,7 +8,7 @@ The initial Expo application and navigation shell for JobLens on iOS and Android
 
 - Expo and TypeScript configuration, app startup, and Expo Router navigation.
 - Feed and Projects tabs, plus a limited account screen.
-- Shared visual tokens and the components needed by these screens.
+- Shared visual tokens and the components needed by these screens, including the app shell every screen is built on ([UI guidance](../UI.md#app-shell)).
 - Developer setup, agent guidance, and a small documentation structure.
 
 ## Should do
@@ -27,4 +27,4 @@ The initial Expo application and navigation shell for JobLens on iOS and Android
 
 ## Current state
 
-The foundation provides the navigation shell. Sign-in, Projects and Uploads are now connected through [003 — Offline photo capture](003-offline-photo-capture.md); the Feed is still unconnected. The planned workflows are recorded in [002 — Project work](002-project-work.md). Use the [engineering workflow](../engineering/WORKFLOW.md) and completion records for validation results; this document is not evidence that a device build or backend integration has passed.
+The foundation provides the navigation shell: a top bar slot, content, and a bottom bar slot that each page fills. The shell has not been checked on a device. Sign-in, Projects and Uploads are now connected through [003 — Offline photo capture](003-offline-photo-capture.md); the Feed is still unconnected. The planned workflows are recorded in [002 — Project work](002-project-work.md). Use the [engineering workflow](../engineering/WORKFLOW.md) and completion records for validation results; this document is not evidence that a device build or backend integration has passed.

@@ -3,6 +3,7 @@
 Use [architecture](../docs/ARCHITECTURE.md) for ownership and API changes, [UI guidance](../docs/UI.md) for presentation, and the relevant [feature document](../docs/features/README.md) for product behavior. Read what the task needs.
 
 - Keep `app/` route files thin: compose navigation and render feature screens. Route files should not accumulate feature logic.
+- Build every screen on `AppShell` and fill its top and bottom bar slots; see [App shell](../docs/UI.md#app-shell). Do not turn navigator headers or tab bars back on.
 - Put feature screens and their local components together in `features/`. Use shared components and theme tokens for UI that is actually reused.
 - Use strict TypeScript and React Native `StyleSheet` for the foundation. Prefer platform and Expo primitives before adding packages.
 - Add state at the narrowest useful scope. Do not introduce a global store, query layer, or persistence framework for the unconnected shell.

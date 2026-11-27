@@ -2,7 +2,6 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, RefreshControl, StyleSheet, TextInput, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
@@ -20,7 +19,6 @@ import {
 
 export function ProjectsScreen() {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   const { signOut } = useAuth();
   const [projects, setProjects] = useState<Project[] | null>(null);
   const [pending, setPending] = useState<Record<string, number>>({});
@@ -83,7 +81,7 @@ export function ProjectsScreen() {
       data={visible}
       keyExtractor={(project) => project.public_id}
       style={styles.list}
-      contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + spacing.xxl }]}
+      contentContainerStyle={styles.content}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={() => void refresh()} />}
       ListHeaderComponent={
         <View style={styles.header}>
@@ -154,7 +152,8 @@ const styles = StyleSheet.create({
   list: { flex: 1, backgroundColor: colors.background },
   content: {
     paddingHorizontal: spacing.gutter,
-    paddingTop: spacing.xl,
+    paddingTop: spacing.lg,
+    paddingBottom: spacing.xxl,
     gap: spacing.sm,
     width: '100%',
     maxWidth: layout.contentWidth,

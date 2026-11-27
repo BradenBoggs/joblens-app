@@ -1,56 +1,44 @@
-import type { PropsWithChildren } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import type { PropsWithChildren, ReactNode } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import { AppText } from '@/components/app-text';
-import { colors, layout, spacing } from '@/theme/tokens';
+import { AppShell } from '@/components/shell/app-shell';
+import { spacing } from '@/theme/tokens';
 
-type ScreenProps = PropsWithChildren<{
+type PageHeadingProps = {
   title: string;
   description?: string;
-  preview?: boolean;
-}>;
+};
 
-export function Screen({ title, description, preview = false, children }: ScreenProps) {
-  const insets = useSafeAreaInsets();
-
+/** The large title at the top of a page's content, with an optional line under it. */
+export function PageHeading({ title, description }: PageHeadingProps) {
   return (
-    <ScrollView
-      style={styles.screen}
-      contentContainerStyle={[
-        styles.content,
-        {
-          paddingLeft: Math.max(spacing.gutter, insets.left),
-          paddingRight: Math.max(spacing.gutter, insets.right),
-          paddingBottom: Math.max(spacing.xxl, insets.bottom),
-        },
-      ]}
-    >
-      <View style={styles.heading}>
-        {preview && (
-          <AppText variant="caption" muted>
-            App preview · Account not connected
-          </AppText>
-        )}
-        <AppText variant="title" accessibilityRole="header">
-          {title}
-        </AppText>
-        {description && <AppText muted>{description}</AppText>}
-      </View>
+    <View style={styles.heading}>
+      <AppText variant="title" accessibilityRole="header">
+        {title}
+      </AppText>
+      {description && <AppText muted>{description}</AppText>}
+    </View>
+  );
+}
+
+type ScreenProps = PropsWithChildren<
+  PageHeadingProps & {
+    topBar?: ReactNode;
+    bottomBar?: ReactNode;
+  }
+>;
+
+/** A scrolling page on the app shell that opens with a large title. */
+export function Screen({ title, description, topBar, bottomBar, children }: ScreenProps) {
+  return (
+    <AppShell topBar={topBar} bottomBar={bottomBar}>
+      <PageHeading title={title} description={description} />
       {children}
-    </ScrollView>
+    </AppShell>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.background },
-  content: {
-    width: '100%',
-    maxWidth: layout.contentWidth,
-    alignSelf: 'center',
-    paddingTop: spacing.xl,
-    gap: spacing.xl,
-    flexGrow: 1,
-  },
   heading: { gap: spacing.sm },
 });
