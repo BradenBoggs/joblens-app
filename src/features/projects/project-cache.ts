@@ -1,4 +1,4 @@
-import { apiRequest } from '@/lib/api';
+import { ApiError, apiRequest } from '@/lib/api';
 import { getDatabase } from '@/lib/database';
 
 export type Project = {
@@ -10,6 +10,27 @@ export type Project = {
 };
 
 type ProjectPage = { data: Project[]; next_cursor: string | null };
+
+/** One project as `GET /api/v1/projects/{project}` returns it. */
+export type ProjectDetails = Project & {
+  description: string | null;
+  archived_at: string | null;
+  customer_contact: {
+    name: string | null;
+    company_name: string | null;
+    phone: string | null;
+    email: string | null;
+  } | null;
+  creator: { name: string } | null;
+  counts: { media: number; collections: number; checklists: number; requests: number };
+};
+
+type ProjectDetailsResponse = {
+  data: Omit<ProjectDetails, 'counts'>;
+  counts: ProjectDetails['counts'];
+};
+
+export type SavedProjectDetails = { project: ProjectDetails; refreshedAt: Date };
 
 /** The saved list, available with no signal. */
 export async function cachedProjects(): Promise<Project[]> {
@@ -55,6 +76,10 @@ export async function refreshProjects(): Promise<Project[]> {
         position,
       );
     }
+    // Forget details of projects that left the list (archived, deleted or moved).
+    await db.runAsync(
+      'DELETE FROM project_details WHERE public_id NOT IN (SELECT public_id FROM projects)',
+    );
     await db.runAsync(
       'INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)',
       'projects_refreshed_at',
@@ -73,4 +98,61 @@ export async function projectsRefreshedAt(): Promise<Date | null> {
   );
 
   return row ? new Date(row.value) : null;
+}
+
+/** The details saved the last time this project was opened with a connection. */
+export async function cachedProjectDetails(publicId: string): Promise<SavedProjectDetails | null> {
+  const db = await getDatabase();
+  const row = await db.getFirstAsync<{ data: string; refreshed_at: string }>(
+    'SELECT data, refreshed_at FROM project_details WHERE public_id = ?',
+    publicId,
+  );
+
+  return row
+    ? { project: JSON.parse(row.data) as ProjectDetails, refreshedAt: new Date(row.refreshed_at) }
+    : null;
+}
+
+/**
+ * Download one project and save it for offline use. A 404 means the member can
+ * no longer open it, so it is removed from the phone and `null` is returned.
+ */
+export async function refreshProjectDetails(publicId: string): Promise<ProjectDetails | null> {
+  const db = await getDatabase();
+  let response: ProjectDetailsResponse;
+
+  try {
+    response = await apiRequest<ProjectDetailsResponse>(
+      `/projects/${encodeURIComponent(publicId)}`,
+    );
+  } catch (error) {
+    if (error instanceof ApiError && error.status === 404) {
+      await db.withTransactionAsync(async () => {
+        await db.runAsync('DELETE FROM project_details WHERE public_id = ?', publicId);
+        await db.runAsync('DELETE FROM projects WHERE public_id = ?', publicId);
+      });
+
+      return null;
+    }
+    throw error;
+  }
+
+  const project: ProjectDetails = { ...response.data, counts: response.counts };
+  await db.runAsync(
+    'INSERT OR REPLACE INTO project_details (public_id, data, refreshed_at) VALUES (?, ?, ?)',
+    publicId,
+    JSON.stringify(project),
+    new Date().toISOString(),
+  );
+  // Keep the list row in step with what was just downloaded.
+  await db.runAsync(
+    'UPDATE projects SET name = ?, address = ?, status = ?, updated_at = ? WHERE public_id = ?',
+    project.name,
+    project.address ?? null,
+    project.status ?? null,
+    project.updated_at ?? null,
+    publicId,
+  );
+
+  return project;
 }

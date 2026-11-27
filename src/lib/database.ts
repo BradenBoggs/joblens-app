@@ -4,8 +4,9 @@ import * as SQLite from 'expo-sqlite';
 let database: Promise<SQLite.SQLiteDatabase> | null = null;
 
 /**
- * The phone's local database: the offline project list and every captured
- * photo with its upload state. It is the source of truth while offline.
+ * The phone's local database: the offline project list, each opened project's
+ * details, and every captured photo with its upload state. It is the source of
+ * truth while offline.
  */
 export function getDatabase(): Promise<SQLite.SQLiteDatabase> {
   database ??= openAndMigrate();
@@ -25,6 +26,11 @@ async function openAndMigrate(): Promise<SQLite.SQLiteDatabase> {
       status TEXT,
       updated_at TEXT,
       position INTEGER NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS project_details (
+      public_id TEXT PRIMARY KEY NOT NULL,
+      data TEXT NOT NULL,
+      refreshed_at TEXT NOT NULL
     );
     CREATE TABLE IF NOT EXISTS captures (
       id TEXT PRIMARY KEY NOT NULL,
@@ -57,7 +63,9 @@ async function openAndMigrate(): Promise<SQLite.SQLiteDatabase> {
 /** Remove everything tied to the signed-in member, after the user confirms. */
 export async function clearLocalData(): Promise<void> {
   const db = await getDatabase();
-  await db.execAsync('DELETE FROM projects; DELETE FROM captures; DELETE FROM meta;');
+  await db.execAsync(
+    'DELETE FROM projects; DELETE FROM project_details; DELETE FROM captures; DELETE FROM meta;',
+  );
 
   const captures = new Directory(Paths.document, 'captures');
   if (captures.exists) {
