@@ -37,7 +37,7 @@ Every screen is built on `AppShell` (`src/components/shell/`). It has three slot
 - Main tabs get their bars from `MainTabShell` in the route file. Any other page renders `AppShell` itself and passes its own bars.
 - Build a new bar from the parts, not from scratch: `TopBar` has `left`, `center`, `right` and `below` slots; `BottomBar` takes `BottomBarItem`s or any other controls.
 - The bottom bar has no divider line and no orange on its tabs. The current tab is shown by a filled icon and darker, bolder text.
-- The camera is the only orange in a bottom bar: `BottomBarAction`, a raised button between the tabs. It appears only in project and collection bars, where a photo has somewhere to go. The main tab bar never has it.
+- The camera is the only orange in a bottom bar: `BottomBarAction`, a raised round button between the tabs. It is the one round button in the app. It appears only in project and collection bars, where a photo has somewhere to go. The main tab bar never has it.
 - Top bar buttons are bare 24-point icons with a 48-point touch area. They have no background shape; a soft grey rounded square shows only while pressed.
 - The centred title is one line and shortens with an ellipsis. Put longer context in the page content.
 - The bars own the safe areas at their edge. Screens inside the shell do not add status bar or home indicator padding.

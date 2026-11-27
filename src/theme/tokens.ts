@@ -49,7 +49,8 @@ export const shell = {
   brandMarkRadius: 7,
   tabIcon: 22,
   actionButton: 60,
-  actionRadius: 16,
+  /** Half of actionButton, so the camera button is a circle. */
+  actionRadius: 30,
   actionLift: 22,
   actionIcon: 26,
 } as const;
