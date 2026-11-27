@@ -5,7 +5,7 @@ Use [architecture](../docs/ARCHITECTURE.md) for ownership and API changes, [UI g
 - Keep `app/` route files thin: compose navigation and render feature screens. Route files should not accumulate feature logic.
 - Put feature screens and their local components together in `features/`. Use shared components and theme tokens for UI that is actually reused.
 - Use strict TypeScript and React Native `StyleSheet` for the foundation. Prefer platform and Expo primitives before adding packages.
-- Add state at the narrowest useful scope. Do not introduce a global store, query layer, or persistence framework for the unconnected shell.
+- Add state at the narrowest useful scope. Do not add a global store or query library until a feature needs one. Server calls follow [Working with the JobLens API](../docs/engineering/API.md).
 - Keep camera capture, upload transport, and gallery interaction as separate responsibilities. They can use the same server media identifiers without owning each other's behavior.
 - Native code may request an authorized operation; it cannot grant permissions or decide organization access. Do not infer a supported mobile API from a web route.
 - Keep originals intact. Future markup must save a separate result according to the backend contract; preview generation and media processing belong to Laravel.
