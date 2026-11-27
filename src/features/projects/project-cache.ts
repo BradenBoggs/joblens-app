@@ -81,6 +81,9 @@ export async function refreshProjects(): Promise<Project[]> {
       'DELETE FROM project_details WHERE public_id NOT IN (SELECT public_id FROM projects)',
     );
     await db.runAsync(
+      'DELETE FROM project_sections WHERE public_id NOT IN (SELECT public_id FROM projects)',
+    );
+    await db.runAsync(
       'INSERT OR REPLACE INTO meta (key, value) VALUES (?, ?)',
       'projects_refreshed_at',
       new Date().toISOString(),
@@ -129,6 +132,7 @@ export async function refreshProjectDetails(publicId: string): Promise<ProjectDe
     if (error instanceof ApiError && error.status === 404) {
       await db.withTransactionAsync(async () => {
         await db.runAsync('DELETE FROM project_details WHERE public_id = ?', publicId);
+        await db.runAsync('DELETE FROM project_sections WHERE public_id = ?', publicId);
         await db.runAsync('DELETE FROM projects WHERE public_id = ?', publicId);
       });
 

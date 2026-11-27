@@ -53,7 +53,7 @@ There are two levels, and each has one bottom bar. The bar changes only when you
   - **Home:** recent updates from permitted projects, then recent projects. It is not a business metrics dashboard.
   - **Projects:** find and open permitted projects; project workflows belong within that context.
   - **Account:** identity and access support, the last main tab. Keep billing, team administration, and organization configuration in the desktop app.
-- **Project level (planned):** Media, Checklists, the camera button, Chat and More. Overview, Collections and details sit under More. On plans without chat, Collections takes the Chat place.
+- **Project level:** Media, Checklists, the camera button, Chat and More (`ProjectTabBar`). Every section is built on `ProjectShell`: the project's name with the section under it and a back button that leaves the project, and the project bar below. A project opens on Media, a grid of its photos with the ones still on this phone first; a photo opens full screen over both bars. Checklists are read-only for now. Chat says plainly that it isn't in the app yet. More holds the counts and the project's details; Collections and Requests show a count without a link until the app can open them. On plans without chat, Collections will take the Chat place.
 - **Full-screen tasks** (camera, photo viewer) hide both bars.
 
 Things that belong to the whole app stay in the same place at both levels. The notification bell will sit at the top right of every page once the app has a notifications feed; chat belongs to one project, so it lives in the project's bottom bar.
