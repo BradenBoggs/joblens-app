@@ -27,6 +27,11 @@ export function isApiConfigured(): boolean {
   return Boolean(apiUrl);
 }
 
+/** The address of a page on the JobLens website, or null when no server is configured. */
+export function webUrl(path: string): string | null {
+  return apiUrl ? `${apiUrl}${path}` : null;
+}
+
 type RequestOptions = {
   method?: 'GET' | 'POST' | 'DELETE';
   body?: unknown;
