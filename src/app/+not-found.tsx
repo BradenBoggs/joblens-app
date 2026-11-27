@@ -10,7 +10,7 @@ export default function NotFoundScreen() {
         icon="compass-outline"
         title="This page is not available"
         description="The link may be incomplete or point to a screen that is not available in this app."
-        action={<NavigationButton href="/" label="Back to feed" replace />}
+        action={<NavigationButton href="/" label="Back to Home" replace />}
       />
     </AppShell>
   );

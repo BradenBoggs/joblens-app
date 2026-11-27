@@ -30,7 +30,7 @@ The initial shell has no domain logic or API requests, so it has no placeholder 
 
 ## Device and integration checks
 
-For the first device build, check Feed ↔ Projects navigation, account open/close, Android back, direct links, notches, rotation, and larger text on iOS and Android. Check final splash appearance in a preview or production build, since Expo Go and development clients have their own launch behavior. Verify screen-reader labels and visible focus where applicable.
+For the first device build, check Home ↔ Projects navigation, account open/close, Android back, direct links, notches, rotation, and larger text on iOS and Android. Check final splash appearance in a preview or production build, since Expo Go and development clients have their own launch behavior. Verify screen-reader labels and visible focus where applicable.
 
 When project integration begins, verify authentication/revocation, organization/project isolation, loading versus unavailable states, and recovery from failed requests. Test capture and media-library permissions, original preservation, upload acceptance, and app interruption on devices when those features exist. Bytes transferred alone do not mean the server accepted an upload.
 

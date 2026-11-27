@@ -29,7 +29,7 @@ Every screen is built on `AppShell` (`src/components/shell/`). It has three slot
 
 | Page kind                     | Top bar                                                                  | Bottom bar                         |
 | ----------------------------- | ------------------------------------------------------------------------ | ---------------------------------- |
-| Main tab (Feed, Projects…)    | `MainTopBar`: JobLens mark, optional actions                             | `MainTabBar`                       |
+| Main tab (Home, Projects…)    | `MainTopBar`: JobLens mark, optional actions                             | `MainTabBar`                       |
 | Page opened from another page | `PageTopBar`: back button, centred title and subtitle, up to two actions | None, or a bar built for that page |
 | Full-screen task (camera)     | None                                                                     | None                               |
 | Signed out                    | None                                                                     | None                               |
@@ -45,10 +45,20 @@ Every screen is built on `AppShell` (`src/components/shell/`). It has three slot
 
 ## Navigation
 
-- **Feed:** recent updates from permitted projects. It is not a business metrics dashboard.
-- **Projects:** find and open permitted projects; project workflows belong within that context.
-- **Uploads:** photos saved on the phone that are waiting to reach JobLens.
-- **Account:** identity and access support, the last main tab. Keep billing, team administration, and organization configuration in the desktop app.
+The bottom bar says where you are. The top bar says what this page is: back, the title, and one or two actions for that page.
+
+There are two levels, and each has one bottom bar. The bar changes only when you move between levels.
+
+- **App level:** Home, Projects and Account.
+  - **Home:** recent updates from permitted projects, then recent projects. It is not a business metrics dashboard.
+  - **Projects:** find and open permitted projects; project workflows belong within that context.
+  - **Account:** identity and access support, the last main tab. Keep billing, team administration, and organization configuration in the desktop app.
+- **Project level (planned):** Media, Checklists, the camera button, Chat and More. Overview, Collections and details sit under More. On plans without chat, Collections takes the Chat place.
+- **Full-screen tasks** (camera, photo viewer) hide both bars.
+
+Things that belong to the whole app stay in the same place at both levels. The notification bell will sit at the top right of every page once the app has a notifications feed; chat belongs to one project, so it lives in the project's bottom bar.
+
+Uploading is a status, not a place, so it has no tab. `UploadNotice` shows how many photos are still on the phone, on Home when any are waiting and always on Account, and opens the Photo uploads page.
 
 Keep navigation visible and predictable. Do not add a top-level tab for every planned project feature. The project detail structure can grow when those workflows are implemented.
 

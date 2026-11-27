@@ -5,6 +5,7 @@ import { AppText } from '@/components/app-text';
 import { PageHeading } from '@/components/screen';
 import { useAuth } from '@/features/auth/auth-provider';
 import { pendingCount } from '@/features/uploads/captures';
+import { UploadNotice } from '@/features/uploads/upload-notice';
 import { colors, layout, spacing } from '@/theme/tokens';
 
 export function AccountScreen() {
@@ -44,6 +45,7 @@ export function AccountScreen() {
           </>
         )}
       </View>
+      <UploadNotice showWhenEmpty />
       <Pressable
         accessibilityRole="button"
         onPress={() => void confirmSignOut()}

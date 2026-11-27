@@ -58,9 +58,6 @@ export function UploadsScreen() {
       contentContainerStyle={styles.content}
       ListHeaderComponent={
         <View style={styles.header}>
-          <AppText variant="title" accessibilityRole="header">
-            Uploads
-          </AppText>
           <AppText muted>
             {waiting > 0
               ? `${waiting} photos are saved on this phone and upload when you have service.`

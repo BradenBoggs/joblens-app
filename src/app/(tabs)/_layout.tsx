@@ -7,9 +7,8 @@ import { Tabs } from 'expo-router/js-tabs';
 export default function TabsLayout() {
   return (
     <Tabs screenOptions={{ headerShown: false }} tabBar={() => null}>
-      <Tabs.Screen name="index" options={{ title: 'Feed' }} />
+      <Tabs.Screen name="index" options={{ title: 'Home' }} />
       <Tabs.Screen name="projects" options={{ title: 'Projects' }} />
-      <Tabs.Screen name="uploads" options={{ title: 'Uploads' }} />
       <Tabs.Screen name="account" options={{ title: 'Account' }} />
     </Tabs>
   );

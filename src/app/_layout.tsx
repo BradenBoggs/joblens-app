@@ -72,6 +72,7 @@ function AppNavigator() {
     >
       <Stack.Protected guard={signedIn}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="uploads" />
         <Stack.Screen
           name="projects/[projectId]/camera"
           options={{ presentation: 'fullScreenModal', animation: 'fade' }}
