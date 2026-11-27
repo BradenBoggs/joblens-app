@@ -38,7 +38,7 @@ Every screen is built on `AppShell` (`src/components/shell/`). It has three slot
 - Build a new bar from the parts, not from scratch: `TopBar` has `left`, `center`, `right` and `below` slots; `BottomBar` takes `BottomBarItem`s or any other controls.
 - The bottom bar has no divider line and no orange on its tabs. The current tab is shown by a filled icon and darker, bolder text.
 - The camera is the only orange in a bottom bar: `BottomBarAction`, a raised button between the tabs. It appears only in project and collection bars, where a photo has somewhere to go. The main tab bar never has it.
-- Bar buttons are drawn at 40 points with a 48-point touch area. Their sizes and corner shape are the `shell` tokens.
+- Top bar buttons are bare 24-point icons with a 48-point touch area. They have no background shape; a soft grey rounded square shows only while pressed.
 - The centred title is one line and shortens with an ellipsis. Put longer context in the page content.
 - The bars own the safe areas at their edge. Screens inside the shell do not add status bar or home indicator padding.
 - The navigators draw no headers or tab bars. The system back gesture and the Android back button behave like the back button.

@@ -94,7 +94,7 @@ type TopBarButtonProps = {
   badge?: number;
 };
 
-/** A bar icon button: drawn at 40 points with a 48-point touch area. */
+/** A bar icon button: a bare icon with a 48-point touch area. It only shows a background while pressed. */
 export function TopBarButton({ icon, label, onPress, badge = 0 }: TopBarButtonProps) {
   return (
     <Pressable
@@ -137,16 +137,15 @@ const styles = StyleSheet.create({
   button: {
     width: shell.barButton,
     height: shell.barButton,
-    borderRadius: shell.barButtonRadius,
-    backgroundColor: colors.surface,
+    borderRadius: layout.radius,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonPressed: { backgroundColor: colors.border },
+  buttonPressed: { backgroundColor: colors.surface },
   badge: {
     position: 'absolute',
-    top: -2,
-    left: 24,
+    top: 0,
+    left: 22,
     minWidth: 20,
     paddingHorizontal: 6,
     borderRadius: 6,

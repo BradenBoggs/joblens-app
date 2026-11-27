@@ -42,10 +42,9 @@ export const shell = {
   barHeight: 56,
   barPadding: 12,
   barGap: 8,
+  /** The touch box of a bar icon button. The icon has no background. */
   barButton: 40,
-  /** Half of barButton draws a circle. Use layout.radius for rounded squares. */
-  barButtonRadius: 20,
-  barIcon: 20,
+  barIcon: 24,
   brandMark: 32,
   brandMarkRadius: 7,
   tabIcon: 22,
