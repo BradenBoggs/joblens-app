@@ -36,6 +36,7 @@ Every screen is built on `AppShell` (`src/components/shell/`). It has three slot
 
 - Main tabs get their bars from `MainTabShell` in the route file. Any other page renders `AppShell` itself and passes its own bars.
 - Build a new bar from the parts, not from scratch: `TopBar` has `left`, `center`, `right` and `below` slots; `BottomBar` takes `BottomBarItem`s or any other controls.
+- The bottom bar follows the top bar: no divider line, and the current tab's icon sits in the same grey shape as a top bar button, with navy icons and no orange.
 - Bar buttons are drawn at 40 points with a 48-point touch area. Their sizes and corner shape are the `shell` tokens.
 - The centred title is one line and shortens with an ellipsis. Put longer context in the page content.
 - The bars own the safe areas at their edge. Screens inside the shell do not add status bar or home indicator padding.

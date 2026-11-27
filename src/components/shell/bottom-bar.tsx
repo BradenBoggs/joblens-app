@@ -52,8 +52,6 @@ export function BottomBarItem({
   badge = 0,
   onPress,
 }: BottomBarItemProps) {
-  const color = active ? colors.brandText : colors.muted;
-
   return (
     <Pressable
       accessibilityRole="tab"
@@ -64,8 +62,12 @@ export function BottomBarItem({
     >
       {({ pressed }) => (
         <>
-          <View style={[styles.icon, pressed && styles.iconPressed]}>
-            <Ionicons name={active ? activeIcon : icon} size={shell.tabIcon} color={color} />
+          <View style={[styles.icon, (active || pressed) && styles.iconActive]}>
+            <Ionicons
+              name={active ? activeIcon : icon}
+              size={shell.barIcon}
+              color={active ? colors.secondary : colors.muted}
+            />
             {badge > 0 ? (
               <View style={styles.badge}>
                 <AppText variant="micro" style={styles.badgeText}>
@@ -74,7 +76,11 @@ export function BottomBarItem({
               </View>
             ) : null}
           </View>
-          <AppText variant="micro" numberOfLines={1} style={[styles.label, { color }]}>
+          <AppText
+            variant="micro"
+            numberOfLines={1}
+            style={active ? styles.labelActive : styles.label}
+          >
             {label}
           </AppText>
         </>
@@ -88,8 +94,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingTop: spacing.xs,
     backgroundColor: colors.background,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: colors.border,
   },
   item: {
     flex: 1,
@@ -98,19 +102,21 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 2,
   },
+  // The current tab's icon sits in the same shape as a top bar button.
   icon: {
-    minWidth: 56,
-    height: 28,
-    borderRadius: layout.radius,
+    width: shell.barButton,
+    height: shell.barButton,
+    borderRadius: shell.barButtonRadius,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  iconPressed: { backgroundColor: colors.surface },
-  label: { fontWeight: '600' },
+  iconActive: { backgroundColor: colors.surface },
+  label: { color: colors.muted },
+  labelActive: { color: colors.text, fontWeight: '600' },
   badge: {
     position: 'absolute',
-    top: -4,
-    left: 32,
+    top: -2,
+    left: 24,
     minWidth: 20,
     paddingHorizontal: 6,
     borderRadius: 6,

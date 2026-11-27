@@ -49,7 +49,6 @@ export const shell = {
   avatar: 28,
   brandMark: 32,
   brandMarkRadius: 7,
-  tabIcon: 24,
 } as const;
 
 export const typography = {
