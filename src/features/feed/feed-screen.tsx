@@ -58,10 +58,10 @@ export function FeedScreen() {
               <Pressable
                 key={project.public_id}
                 accessibilityRole="button"
-                accessibilityLabel={`Take photos for ${project.name}`}
+                accessibilityLabel={`Open ${project.name}`}
                 onPress={() =>
                   router.push({
-                    pathname: '/projects/[projectId]/camera',
+                    pathname: '/projects/[projectId]',
                     params: { projectId: project.public_id },
                   })
                 }

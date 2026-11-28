@@ -1,71 +1,20 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useRouter } from 'expo-router';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, TextInput, View } from 'react-native';
 
 import { AppText } from '@/components/app-text';
 import { EmptyState } from '@/components/empty-state';
 import { SkeletonCards } from '@/components/skeleton';
-import { useAuth } from '@/features/auth/auth-provider';
-import { pendingCountsByProject, subscribeToCaptures } from '@/features/uploads/captures';
-import { ApiError } from '@/lib/api';
 import { colors, layout, spacing, typography } from '@/theme/tokens';
 
-import {
-  cachedProjects,
-  type Project,
-  projectsRefreshedAt,
-  refreshProjects,
-} from './project-cache';
 import { ProjectCard } from './project-card';
+import { useProjects } from './use-projects';
 
 export function ProjectsScreen() {
   const router = useRouter();
-  const { signOut } = useAuth();
-  const [projects, setProjects] = useState<Project[] | null>(null);
-  const [pending, setPending] = useState<Record<string, number>>({});
+  const { projects, pendingUploads: pending, refreshing, notice, refresh } = useProjects();
   const [search, setSearch] = useState('');
-  const [refreshing, setRefreshing] = useState(false);
-  const [notice, setNotice] = useState<string | null>(null);
-
-  const refresh = useCallback(async () => {
-    setRefreshing(true);
-    try {
-      setProjects(await refreshProjects());
-      setNotice(null);
-    } catch (error) {
-      if (error instanceof ApiError && error.status === 401) {
-        await signOut();
-
-        return;
-      }
-      const savedAt = await projectsRefreshedAt();
-      setNotice(
-        error instanceof ApiError && error.isOffline
-          ? `Offline. Showing your saved list${savedAt ? ` from ${savedAt.toLocaleString()}` : ''}.`
-          : error instanceof Error
-            ? error.message
-            : 'Projects could not be refreshed.',
-      );
-    } finally {
-      setRefreshing(false);
-    }
-  }, [signOut]);
-
-  useEffect(() => {
-    void cachedProjects().then((saved) => {
-      setProjects(saved);
-
-      return refresh();
-    });
-  }, [refresh]);
-
-  useEffect(() => {
-    const load = () => void pendingCountsByProject().then(setPending);
-    load();
-
-    return subscribeToCaptures(load);
-  }, []);
 
   const visible = useMemo(() => {
     const term = search.trim().toLowerCase();
@@ -128,10 +77,10 @@ export function ProjectsScreen() {
         <ProjectCard
           project={item}
           waitingToUpload={pending[item.public_id] ?? 0}
-          accessibilityLabel={`Take photos for ${item.name}`}
+          accessibilityLabel={`Open ${item.name}`}
           onPress={() =>
             router.push({
-              pathname: '/projects/[projectId]/camera',
+              pathname: '/projects/[projectId]',
               params: { projectId: item.public_id },
             })
           }
