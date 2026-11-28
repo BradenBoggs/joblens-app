@@ -46,7 +46,7 @@ export function ProjectShell({ section, skeleton, scroll, children }: ProjectShe
         <EmptyState
           icon="folder-open-outline"
           title="This project isn't on this phone"
-          description="It may have been archived or removed. Refresh your project list with a connection."
+          description="It may have been archived or removed. Pull down on Projects to refresh your list."
         />
         <NavigationButton href="/projects" label="Back to projects" replace />
       </AppShell>
