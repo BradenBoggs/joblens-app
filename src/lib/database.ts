@@ -5,7 +5,7 @@ let database: Promise<SQLite.SQLiteDatabase> | null = null;
 
 /**
  * The phone's local database: the offline project list, each opened project's
- * details, and every captured photo with its upload state. It is the source of
+ * details and sections, and every captured photo with its upload state. It is the source of
  * truth while offline.
  */
 export function getDatabase(): Promise<SQLite.SQLiteDatabase> {
@@ -31,6 +31,13 @@ async function openAndMigrate(): Promise<SQLite.SQLiteDatabase> {
       public_id TEXT PRIMARY KEY NOT NULL,
       data TEXT NOT NULL,
       refreshed_at TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS project_sections (
+      public_id TEXT NOT NULL,
+      section TEXT NOT NULL,
+      data TEXT NOT NULL,
+      refreshed_at TEXT NOT NULL,
+      PRIMARY KEY (public_id, section)
     );
     CREATE TABLE IF NOT EXISTS captures (
       id TEXT PRIMARY KEY NOT NULL,
@@ -64,7 +71,7 @@ async function openAndMigrate(): Promise<SQLite.SQLiteDatabase> {
 export async function clearLocalData(): Promise<void> {
   const db = await getDatabase();
   await db.execAsync(
-    'DELETE FROM projects; DELETE FROM project_details; DELETE FROM captures; DELETE FROM meta;',
+    'DELETE FROM projects; DELETE FROM project_details; DELETE FROM project_sections; DELETE FROM captures; DELETE FROM meta;',
   );
 
   const captures = new Directory(Paths.document, 'captures');

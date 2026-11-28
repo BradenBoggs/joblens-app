@@ -37,4 +37,11 @@ Capture and upload is implemented as a spike ([003](003-offline-photo-capture.md
 
 ## Current state and next dependency
 
-Sign-in, the project list and photo capture/upload use the Laravel mobile API ([003](003-offline-photo-capture.md)). Tapping a project on Projects or Home opens its page (`GET /api/v1/projects/{project}`): name, address, customer, description, and the media, collection, checklist and request counts, with Take photos. The list and each opened project are saved in the phone's database, so both open with no signal and refresh when there is one (pull down to refresh). A project the member can no longer open (404) is removed from the phone. The screens get their data from `useProjects` and `useProject` in `src/features/projects/`, so the app shell can change their layout without touching the data logic. The other workflows need their own API endpoints and device checks. Add focused feature documents as those contracts become concrete.
+Sign-in, the project list and photo capture/upload use the Laravel mobile API ([003](003-offline-photo-capture.md)). Tapping a project on Projects or Home opens it on its Media section, with the project bar (Media, Checklists, camera, Chat, More) at the bottom. `ProjectProvider` loads the project once (`GET /api/v1/projects/{project}`) and every section reads it with `useCurrentProject`.
+
+- **Media** (`src/features/media/`): `GET /api/v1/projects/{project}/media`, 60 per page, loading older pages as you scroll. Photos taken on this phone that JobLens doesn't have yet lead the grid. Tapping a photo opens it full screen. Videos show their still frame; playing them is not built. The picture addresses are private and short-lived, so pull down to refresh them.
+- **Checklists** (`src/features/checklists/`): `GET /api/v1/projects/{project}/checklists`, read-only, with progress and each item's state. Answering items needs its own endpoint.
+- **Chat**: not connected; the section says so.
+- **More**: counts, pending uploads, status, address, description, creator and customer.
+
+The list, each opened project and the newest copy of each section (`project_sections` table, through `useProjectSection`) are saved in the phone's database, so they open with no signal and refresh when there is one (pull down to refresh). A project the member can no longer open (404) is removed from the phone. The other workflows need their own API endpoints and device checks. Add focused feature documents as those contracts become concrete.
