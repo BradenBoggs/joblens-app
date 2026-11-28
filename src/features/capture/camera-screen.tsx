@@ -56,7 +56,10 @@ export function CameraScreen({ project }: { project: CaptureProject }) {
   }, [hasPermission, canRequestPermission, requestPermission]);
 
   // Keep a fresh GPS fix while the camera is open, so each photo can record where it was taken.
+  // Asked only after the camera is allowed: Android shows one permission prompt at a time,
+  // and a second request made while the first is open comes back refused without a prompt.
   useEffect(() => {
+    if (!hasPermission) return;
     let subscription: Location.LocationSubscription | null = null;
     void (async () => {
       const permission = await Location.requestForegroundPermissionsAsync();
@@ -69,7 +72,7 @@ export function CameraScreen({ project }: { project: CaptureProject }) {
     })();
 
     return () => subscription?.remove();
-  }, []);
+  }, [hasPermission]);
 
   const refreshWaiting = useCallback(() => {
     void pendingCountsByProject().then((counts) => {
@@ -107,6 +110,14 @@ export function CameraScreen({ project }: { project: CaptureProject }) {
     }
   }, [flash, photoOutput, project]);
 
+  // Ask Android again even when it was refused before: it shows the prompt if it still can,
+  // and only when it can't does the member need the phone's settings.
+  const askForCamera = async () => {
+    if (!(await requestPermission())) {
+      await Linking.openSettings();
+    }
+  };
+
   if (!hasPermission) {
     return (
       <View style={[styles.permission, { paddingTop: insets.top + spacing.xl }]}>
@@ -119,7 +130,7 @@ export function CameraScreen({ project }: { project: CaptureProject }) {
         </AppText>
         <Pressable
           accessibilityRole="button"
-          onPress={() => (canRequestPermission ? requestPermission() : Linking.openSettings())}
+          onPress={() => void askForCamera()}
           style={styles.permissionButton}
         >
           <AppText variant="label">
