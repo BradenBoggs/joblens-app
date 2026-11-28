@@ -18,7 +18,7 @@ import { refreshNotice } from './use-projects';
  * once, then downloads fresh details when there is signal.
  *
  * `project` is `undefined` while the phone is reading its saved copy and `null`
- * when the project isn't on the phone or the member can no longer open it.
+ * when the project isn't in the phone's project list.
  * `details` is null until details have been downloaded at least once.
  */
 export function useProject(publicId: string) {
@@ -34,10 +34,18 @@ export function useProject(publicId: string) {
     setRefreshing(true);
     try {
       const fresh = await refreshProjectDetails(publicId);
-      setProject(fresh);
-      setDetails(fresh);
-      setSavedAt(fresh ? new Date() : null);
-      setNotice(null);
+      if (fresh) {
+        setProject(fresh);
+        setDetails(fresh);
+        setSavedAt(new Date());
+        setNotice(null);
+      } else {
+        // The server has no details for it. Keep it open from the list row if it is still listed.
+        setProject(await cachedProject(publicId));
+        setDetails(null);
+        setSavedAt(null);
+        setNotice("This project's details couldn't be loaded from JobLens.");
+      }
     } catch (error) {
       if (error instanceof ApiError && error.status === 401) {
         await signOut();

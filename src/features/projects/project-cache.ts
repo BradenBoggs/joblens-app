@@ -117,8 +117,10 @@ export async function cachedProjectDetails(publicId: string): Promise<SavedProje
 }
 
 /**
- * Download one project and save it for offline use. A 404 means the member can
- * no longer open it, so it is removed from the phone and `null` is returned.
+ * Download one project and save it for offline use. On a 404 its saved details
+ * are forgotten and `null` is returned. The row in the project list stays: only
+ * a refresh of the list decides which projects exist, because a 404 can also
+ * come from a server that does not have this endpoint yet.
  */
 export async function refreshProjectDetails(publicId: string): Promise<ProjectDetails | null> {
   const db = await getDatabase();
@@ -133,7 +135,6 @@ export async function refreshProjectDetails(publicId: string): Promise<ProjectDe
       await db.withTransactionAsync(async () => {
         await db.runAsync('DELETE FROM project_details WHERE public_id = ?', publicId);
         await db.runAsync('DELETE FROM project_sections WHERE public_id = ?', publicId);
-        await db.runAsync('DELETE FROM projects WHERE public_id = ?', publicId);
       });
 
       return null;
